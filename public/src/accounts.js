@@ -20,12 +20,12 @@ function getTotalNumberOfBorrows(account, books) {
   return totalBorrows;
 }
 
-// hi there
-
 function getBooksPossessedByAccount(account, books, authors) {
   const accountId = account.id;
   const currentlyBorrowed = books.reduce((acc, book) => {
     book.borrows.forEach((element) => {
+      // this checks to make sure that account ID matches AND the returned value is false.
+      // otherwise it will not push the book to the accumulator.
       if (element.id === accountId && element.returned === false) {
         book["author"] = authors.filter(
           (author) => book.authorId === author.id

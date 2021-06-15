@@ -11,6 +11,8 @@ function getBooksBorrowedCount(books) {
 }
 
 function getMostCommonGenres(books) {
+  // I preferred not to do this with a map method as I was able to write the code more
+  // effectively without it but it was a requirement of the assignment.
   const count = books.reduce((acc, { genre }) => {
     if (acc[genre]) {
       acc[genre] += 1;
@@ -41,11 +43,15 @@ function getMostPopularBooks(books) {
 function getMostPopularAuthors(books, authors) {
   let mostPopularAuthors = [];
   for (const author of authors) {
+    // first we need to call a helper function to get and array of
+    // all books by a specific author.
     let booksByAuthor = _getBooksByAuthor(books, author.id);
     let borrowedCount = 0;
     for (const book of booksByAuthor) {
       borrowedCount += book.borrows.length;
     }
+    // this will create the author object with the author's name and
+    // number of times their books have been checked out.
     const authorObject = {
       name: `${author["name"].first} ${author["name"].last}`,
       count: borrowedCount,
@@ -57,6 +63,7 @@ function getMostPopularAuthors(books, authors) {
     .slice(0, 5);
 }
 
+// HELPER FUCTIONS
 function _getBooksByAuthor(books, authorId) {
   return books.filter((book) => book.authorId === authorId);
 }
